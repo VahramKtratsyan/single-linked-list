@@ -13,7 +13,7 @@ all: $(BUILD_DIR)/test
 $(BUILD_DIR)/test: $(BUILD_DIR)/test.o
 	$(CXX) $(BUILD_DIR)/test.o -o $(BUILD_DIR)/test $(TEST_LIBS)
 
-$(BUILD_DIR)/test.o: $(SOURCE_DIR)/$(TEST_DIR)/test.cpp $(TEMPLATE_DIR)/LinkedList.tpp
+$(BUILD_DIR)/test.o: $(SOURCE_DIR)/$(TEST_DIR)/test.cpp $(TEMPLATE_DIR)/LinkedList.tpp $(TEMPLATE_DIR)/ListBuffer.tpp
 	$(CXX) -c $(CXXFLAGS) $(INCLUDED_DIR) $(SOURCE_DIR)/$(TEST_DIR)/test.cpp -o $(BUILD_DIR)/test.o  
 
 test:
