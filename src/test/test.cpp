@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <utility>
 #include "../../template/LinkedList.tpp"
 
 TEST(LinedList, CreatingList) 
@@ -276,26 +277,6 @@ TEST(LinkedList, RemoveFirstElementFromASingleElementContainedList_PrintList_Ins
     ASSERT_EQ(list.get(1), -2);
 }
 
-TEST(LinkedList, CopyEmptyObject_CheckingLengths_PrintList1) 
-{                   
-    LinkedList<int> list;
-    LinkedList<int> list1(list);
-    ASSERT_EQ(list1.length(), 0);
-    list1.printList();
-}
-
-TEST(LinkedList, CopyObject_CheckingLengths_PrintToWatchTheyAreNotPointedTheSmaeMemory) 
-{                   
-    LinkedList<int> list(1);
-    for (int i = 2; i <= 6; ++i)
-        list.insertTail(i);
-    list.printList();
-    LinkedList<int> list1(list);
-    list1.insertTail(7);
-    ASSERT_EQ(list1.length(), 7);
-    ASSERT_EQ(list.length(), 6);
-    list1.printList();
-}
 
 TEST(LinkedList, RemoveFirstPositionElementFromEmptyList_ExceptionChecking) 
 {                   
@@ -413,4 +394,88 @@ TEST(LinkedList, GetNonValidPositionElementFromNonEmptyList_ExceptionChecking)
     {
         ASSERT_STREQ("There is not element at the specified position.", e.what()); 
     }
+}
+
+TEST(LinkedList, CopyEmptyObjectByCopyConstructor_CheckingLengths_PrintList1) 
+{                   
+    LinkedList<int> list;
+    LinkedList<int> list1(list);
+    ASSERT_EQ(list1.length(), 0);
+    list1.printList();
+}
+
+TEST(LinkedList, CopyObjectByCopyConstructor_CheckingLengths_PrintToWatchTheyAreNotPointedOnTheSmaeMemory) 
+{                   
+    LinkedList<int> list(1);
+    for (int i = 2; i <= 6; ++i)
+        list.insertTail(i);
+    list.printList();
+    LinkedList<int> list1(list);
+    list1.insertTail(7);
+    ASSERT_EQ(list1.length(), 7);
+    ASSERT_EQ(list.length(), 6);
+    list1.printList();
+}
+
+TEST(LinkedList, EmptyObjectCopyAssignment_CheckingLengths_PrintLists) 
+{                   
+    LinkedList<int> list;
+    LinkedList<int> list1;
+    list = list1;
+    ASSERT_EQ(list1.length(), 0);
+    ASSERT_EQ(list.length(), 0);
+    list.printList();
+    list1.printList();
+}
+
+TEST(LinkedList, CopyAssignOneObjectToAnother_CheckingLengths_PrintListsToWatchTheyAreNotPointedOnTheSmaeMemory) 
+{                   
+    LinkedList<int> list;
+    for (int i = 1; i <= 4; ++i)
+        list.insertTail(i);
+    list.printList();
+    LinkedList<int> list1;
+    for (int i = 1; i <= 3; ++i)
+        list1.insertTail(i);
+    list1.printList();
+    list1 = list;
+    ASSERT_EQ(list1.length(), 4);
+    list.insertTail(5);
+    ASSERT_EQ(list.length(), 5);
+    list.printList();
+    list1.printList();
+}
+
+TEST(LinkedList, MoveAssignmentWithTemporaryObject_CheckLength_PrintList) 
+{                              
+    LinkedList<int> list;
+    for (int i = 1; i <= 4; ++i)
+        list.insertTail(i);
+    list.printList();
+    list = LinkedList<int>(3);
+    EXPECT_EQ(list.length(), 1);
+    list.printList();
+}
+
+TEST(LinkedList, MoveAssignmentWithNonTemporaryObject_CheckLengths_PrintList) 
+{                              
+    LinkedList<int> list;
+    list.insertTail(10);
+    list.insertTail(20);
+
+    LinkedList<int> list1;
+    list1 = std::move(list);
+    list1.printList();
+    EXPECT_EQ(list1.length(), 2);
+    EXPECT_EQ(list.length(), 0);
+}
+
+TEST(LinkedList, MoveObjectByMoveConstructor_CheckLength_PrintList) 
+{ 
+    LinkedList<int> list;
+    for (int i = 1; i <= 4; ++i)
+        list.insertTail(i);                             
+    LinkedList<int> list1(std::move(list));
+    EXPECT_EQ(list1.length(), 4);
+    list1.printList();
 }
