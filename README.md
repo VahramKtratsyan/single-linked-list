@@ -1,1 +1,4 @@
-Implement a single linked list as a template class with pointers using test-driven development and tracking the Single Responsibility Principle.                                                                                                ListBuffer is a class responsible for the memory management of the list. It handles the core functionalities such as dynamic memory allocation, deep copying, moving, and destruction of nodes.                                                 LinkedList is a derived class from ListBuffer and provides the public interface for list operations.
+The goal of this project is to implement a singly linked list as a template class using pointers, providing a well-defined interface.
+Memory management is handled through a private base class, with full support for copy and move semantics.
+The implementation guarantees exception safety in all methods.
+The development follows Test-Driven Development (TDD), with comprehensive tests validating functionality and robustness.
