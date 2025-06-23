@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../../template/linked_list.tpp"
+#include "../src/template/linked_list.tpp"
 
 TEST(LinedList, CreateEmptyList) 
 {
